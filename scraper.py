@@ -13,4 +13,18 @@ keywords = 'expert+comptable'
 
 browser.visit('https://www.linkedin.com/search/results/index/?keywords=' + keywords + '&origin=GLOBAL_SEARCH_HEADER')
 
-results = browser.find_by_css('.search-results__primary-cluster ul.results-list li')
+#window.scrollTo(0, document.body.scrollHeight)
+browser.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+
+results = browser.find_by_css('.search-results__primary-cluster ul.results-list li.search-result')
+
+for i,result in enumerate(results):
+    try:
+        name = result.find_by_css('span.name')
+        print name.html.encode('utf8','xmlcharrefreplace')
+    except:
+        try:
+            name = result.find_by_css('h3.actor-name-with-distance')
+            print name.html.encode('utf8','xmlcharrefreplace')
+        except:
+            print "error"
