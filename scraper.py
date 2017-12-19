@@ -7,8 +7,8 @@ from random import randint
 
 lkdn_profiles = [
     {'login': 'michel@ibakus.com', 'pwd': 'KibogO*8011'},
-    {'login': 'dev3@ibakus.com', 'pwd': 'KibogO*8011'},
-    {'login': 'comm.manager@ibakus.com', 'pwd': 'KibogO*8011'}
+    #{'login': 'dev3@ibakus.com', 'pwd': 'KibogO*8011'},
+    #{'login': 'comm.manager@ibakus.com', 'pwd': 'KibogO*8011'}
 ]
 
 url = "https://www.linkedin.com"
@@ -31,20 +31,25 @@ else:
 
 print "Recherche de(s) mot(s) clé(s) '" + keywords + "'"
 
-browser.visit('https://www.linkedin.com/search/results/index/?keywords=' + keywords + '&origin=GLOBAL_SEARCH_HEADER')
+browser.visit('https://www.linkedin.com/search/results/people/?facetGeoRegion=["lu%3A0"]&facetNetwork=%5B%22S%22%2C%22O%22%5D&keywords=' + keywords + '&origin=FACETED_SEARCH')
 
 # Force le scroll vers le bas pour éviter de récupérer des résultats vides lorsqu'ils ne sont pas dans le viewport
-browser.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+browser.execute_script("window.scrollTo(0, 0);")
 
 results = browser.find_by_css('.search-results__primary-cluster ul.results-list li.search-result')
 
 for i,result in enumerate(results):
-    try:
-        name = result.find_by_css('span.name')
-        print name.html.encode('utf8','xmlcharrefreplace')
-    except:
-        try:
-            name = result.find_by_css('h3.actor-name-with-distance')
-            print name.html.encode('utf8','xmlcharrefreplace')
-        except:
-            print "error"
+    name = result.find_by_css('span.name')
+    tagline = result.find_by_css('p.subline-level-1')
+    position = result.find_by_css('p.search-result__snippets')
+    location = result.find_by_css('p.subline-level-2')
+    action = result.find_by_css('button.search-result__actions--primary')
+
+    print {
+        'name': name.html.encode('utf8','xmlcharrefreplace').strip(),
+        'tagline': tagline.html.encode('utf8', 'xmlcharrefreplace').strip(),
+        'job position': position.html.encode('utf8','xmlcharrefreplace').strip(),
+        'location': location.html.encode('utf8','xmlcharrefreplace').strip(),
+        'action': action.html.encode('utf8','xmlcharrefreplace').strip()
+    }
