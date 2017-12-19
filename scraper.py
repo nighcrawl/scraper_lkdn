@@ -24,7 +24,10 @@ browser.fill('session_password', rand_profile['pwd'])
 loginSubmit = browser.find_by_id('login-submit')
 loginSubmit.click()
 
-keywords = 'expert+comptable'
+if len(sys.argv) > 2:
+    keywords = sys.argv[1]
+else:
+    keywords = 'expert comptable'
 
 print "Recherche de(s) mot(s) clé(s) '" + keywords + "'"
 
