@@ -9,7 +9,7 @@ browser = Browser('firefox')
 
 # Fonction permettant de construire le message à envoyer
 def setMessage(item):
-    message = u"Bonjour " + item['name'].decode('utf-8') + u",\r\nJ'aimerai beaucoup faire partie de votre réseau sur LinkedIn.\r\nNous développons des solutions technologiques anti-blanchiment à destination de votre métier et cela pourrait potentiellement vous intéresser dans le futur.\r\n\r\nBien à vous,\r\n\r\nMichel"
+    message = u"Bonjour " + item['firstname'].decode('utf-8') + u",\r\nJ'aimerai beaucoup faire partie de votre réseau sur LinkedIn.\r\nNous développons des solutions technologiques anti-blanchiment à destination de votre métier et cela pourrait potentiellement vous intéresser dans le futur.\r\n\r\nBien à vous,\r\n\r\nMichel"
     return message
 
 # Fonction permettant d'afficher la liste des personnes de la page
@@ -28,6 +28,7 @@ def getPageList(stop):
 
         item = {
             'name': name.html.encode('utf8','xmlcharrefreplace').strip() if len(name) > 0 else None,
+            'firstname': name.html.encode('utf8','xmlcharrefreplace').strip().split(' ')[0].capitalize() if len(name) > 0 else None,
             'tagline': tagline.html.encode('utf8', 'xmlcharrefreplace').strip() if len(tagline) > 0 else None,
             'job position': position.html.encode('utf8','xmlcharrefreplace').strip() if len(position) > 0 else None,
             'location': location.html.encode('utf8','xmlcharrefreplace').strip() if len(location) > 0 else None,
