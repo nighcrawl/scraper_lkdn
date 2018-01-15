@@ -10,10 +10,11 @@ browser = Browser('firefox')
 # Fonction permettant de construire le message à envoyer
 def setMessage(item):
     message = "Bonjour " + str(item['name']) + ",\r\nJ'aimerai vous parler d'un outil qui je pense pourrait vous être utile"
+    "Bonjour {FirstName},\nJ'aimerai beaucoup faire partie de votre réseau sur LinkedIn.\r\nNous développons des solutions technologiques anti-blanchiment à destination de votre métier et cela pourrait potentiellement vous intéresser dans le futur.\r\n\r\nBien à vous,\r\n\r\nMichel"
     return message
 
 # Fonction permettant d'afficher la liste des personnes de la page
-def getPageList():
+def getPageList(stop):
     time.sleep(5)
     # Récupère la liste de résultats
     results = browser.find_by_css('.search-results__primary-cluster ul.results-list li.search-result')
@@ -59,7 +60,8 @@ def getPageList():
         time.sleep(1)
         browser.execute_script("window.scrollTo(0, 0);")
 
-        getPageList()
+        if (stop == False):
+            getPageList()
 
 # Fonction principale
 def main():
@@ -81,14 +83,43 @@ def main():
     loginSubmit = browser.find_by_id('login-submit')
     loginSubmit.click()
 
-    if len(sys.argv) >= 2:
-        keywords = sys.argv[1]
+    print sys.argv
+
+    if "--keywords" in sys.argv:
+        keywords = sys.argv[sys.argv.index("--keywords") + 1]
+    elif "-k" in sys.argv:
+        keywords = sys.argv[sys.argv.index("-k") + 1]
     else:
         keywords = 'expert comptable'
 
-    print "Recherche de(s) mot(s) clé(s) '" + keywords + "'"
+    if "--page" in sys.argv:
+        page = sys.argv[sys.argv.index("--page") + 1]
+    elif "-p" in sys.argv:
+        page = sys.argv[sys.argv.index("-p") + 1]
+    else:
+        page = 1
 
-    browser.visit('https://www.linkedin.com/search/results/people/?facetGeoRegion=["lu%3A0"]&facetNetwork=%5B%22S%22%2C%22O%22%5D&keywords=' + keywords + '&origin=FACETED_SEARCH')
+
+    if "--stop" in sys.argv:
+        stop = True
+    elif "-s" in sys.argv:
+        stop = True
+    else:
+        stop = False
+
+
+    print "Recherche de(s) mot(s) clé(s) '" + keywords + "'"
+    print stop
+    print page
+    sys.exit()
+
+    # filtres = relation : 2e, 3e et +; lieux : belgique; secteurs : Comptabilité, Services financiers; langue : Français
+    filters  = '?facetGeoRegion=%5B"be%3A0"%5D&facetIndustry=%5B"47"%2C"43"%5D&facetNetwork=%5B"S"%2C"O"%5D&facetProfileLanguage=%5B"fr"%5D&keywords=' + keywords + '&origin=FACETED_SEARCH'
+
+    # filtres = relation : 2e, 3e et +; lieux: luxembourg;
+    # filters = '?facetGeoRegion=["lu%3A0"]&facetNetwork=%5B%22S%22%2C%22O%22%5D&keywords=' + keywords + '&origin=FACETED_SEARCH'
+
+    browser.visit('https://www.linkedin.com/search/results/people/' + filters)
     # Force le scroll vers le bas pour éviter de récupérer des résultats vides lorsqu'ils ne sont pas dans le viewport
     browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     time.sleep(1)
