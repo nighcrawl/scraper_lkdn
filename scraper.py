@@ -50,6 +50,7 @@ def getPageList(stop):
             sendInvite = browser.find_by_css('div.send-invite__actions button.button-primary-large.ml1')
             print "Click sur Terminé"
             sendInvite.click()
+            time.sleep(30)
         print "----"
     # Si un lien permettant de passer à la page de résultats suivants et présent, on clique dessus puis on appelle getPageList()
     if browser.is_element_present_by_css('button.next'):
