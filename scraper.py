@@ -35,7 +35,7 @@ def getPageList(stop):
         }
 
         # Si le bouton permet de se connecter, on clique dessus puis on envoi un message prédéfini
-        if item['action'] == "Se connecter" and item['name'] == "Michel VANSIMPSEN":
+        if item['action'] == "Se connecter":
             print "Click pour " + item['name']
             action.click()
 
@@ -67,8 +67,8 @@ def getPageList(stop):
 # Fonction principale
 def main():
     lkdn_profiles = [
-        #{'login': 'michel@ibakus.com', 'pwd': 'KibogO*8011'},
-        {'login': 'dev3@ibakus.com', 'pwd': 'KibogO*8011'},
+        {'login': 'michel@ibakus.com', 'pwd': 'KibogO*8011'},
+        #{'login': 'dev3@ibakus.com', 'pwd': 'KibogO*8011'},
         #{'login': 'comm.manager@ibakus.com', 'pwd': 'KibogO*8011'}
     ]
 
@@ -115,10 +115,10 @@ def main():
     #sys.exit()
 
     # filtres = relation : 2e, 3e et +; lieux : belgique; secteurs : Comptabilité, Services financiers; langue : Français
-    #filters  = '?facetGeoRegion=%5B"be%3A0"%5D&facetIndustry=%5B"47"%2C"43"%5D&facetNetwork=%5B"S"%2C"O"%5D&facetProfileLanguage=%5B"fr"%5D&keywords=' + keywords + '&origin=FACETED_SEARCH'
+    filters  = '?facetGeoRegion=%5B"be%3A0"%5D&facetIndustry=%5B"47"%2C"43"%5D&facetNetwork=%5B"S"%2C"O"%5D&facetProfileLanguage=%5B"fr"%5D&keywords=' + keywords + '&origin=FACETED_SEARCH'
 
     # filtres = relation : 2e, 3e et +; lieux: luxembourg;
-    filters = '?facetGeoRegion=["lu%3A0"]&facetNetwork=%5B%22S%22%2C%22O%22%5D&keywords=' + keywords + '&origin=FACETED_SEARCH'
+    #filters = '?facetGeoRegion=["lu%3A0"]&facetNetwork=%5B%22S%22%2C%22O%22%5D&keywords=' + keywords + '&origin=FACETED_SEARCH'
 
     browser.visit('https://www.linkedin.com/search/results/people/' + filters)
     # Force le scroll vers le bas pour éviter de récupérer des résultats vides lorsqu'ils ne sont pas dans le viewport
