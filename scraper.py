@@ -5,7 +5,7 @@ import time
 from splinter import Browser
 from random import randint
 
-browser = Browser('firefox')
+browser = Browser('firefox', headless=True)
 
 # Fonction permettant de construire le message à envoyer
 def setMessage(item):
@@ -100,7 +100,7 @@ def main():
     elif "-p" in sys.argv:
         page = sys.argv[sys.argv.index("-p") + 1]
     else:
-        page = 1
+        page = str(1)
 
 
     if "--stop" in sys.argv:
