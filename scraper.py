@@ -68,25 +68,21 @@ def getPageList(stop):
 
 # Fonction principale
 def main():
-    lkdn_profiles = [
-        {'login': 'michel@ibakus.com', 'pwd': 'KibogO*8011'},
-        #{'login': 'dev3@ibakus.com', 'pwd': 'KibogO*8011'},
-        #{'login': 'comm.manager@ibakus.com', 'pwd': 'KibogO*8011'}
-    ]
-
-    url = "https://www.linkedin.com"
-    browser.visit(url)
-
-    rand_profile = lkdn_profiles[randint(0,len(lkdn_profiles) - 1)]
-
-    print "Connexion avec le compte '" + rand_profile['login'] + "'"
-
-    browser.fill('session_key', rand_profile['login'])
-    browser.fill('session_password', rand_profile['pwd'])
-    loginSubmit = browser.find_by_id('login-submit')
-    loginSubmit.click()
-
     print sys.argv
+
+    if "--user" in sys.argv:
+        login = sys.argv[sys.argv.index("--user") + 1]
+    elif "-u" in sys.argv:
+        login = sys.argv[sys.argv.index("-u") + 1]
+    else:
+        sys.exit("Erreur : le paramètre `--user` ou `-u` n'est pas renseigné")
+
+    if "--password" in sys.argv:
+        pwd = sys.argv[sys.argv.index("--password") + 1]
+    elif "-w" in sys.argv:
+        pwd = sys.argv[sys.argv.index("-w") + 1]
+    else:
+        sys.exit("Erreur : le paramètre `--password` ou `-w` n'est pas renseigné")
 
     if "--keywords" in sys.argv:
         keywords = sys.argv[sys.argv.index("--keywords") + 1]
@@ -110,10 +106,16 @@ def main():
     else:
         stop = False
 
+    print "Connexion avec le compte '" + login + "'"
+    url = "https://www.linkedin.com"
+    browser.visit(url)
+
+    browser.fill('session_key', login)
+    browser.fill('session_password', pwd)
+    loginSubmit = browser.find_by_id('login-submit')
+    loginSubmit.click()
 
     print "Recherche de(s) mot(s) clé(s) '" + keywords + "'"
-    print stop
-    print page
     #sys.exit()
 
     # filtres = relation : 2e, 3e et +; lieux : belgique; secteurs : Comptabilité, Services financiers; langue : Français
