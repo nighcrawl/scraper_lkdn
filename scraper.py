@@ -53,7 +53,8 @@ def getPageList(stop):
             sendInvite.click()
             time.sleep(30)
         print "----"
-    # Si un lien permettant de passer à la page de résultats suivants et présent, on clique dessus puis on appelle getPageList()
+
+    # Si un lien permettant de passer à la page de résultats suivants est présent, on clique dessus puis on appelle getPageList()
     if browser.is_element_present_by_css('button.next'):
         nextButton = browser.find_by_css('button.next')
         nextButton.click()
