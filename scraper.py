@@ -127,6 +127,7 @@ def main():
 
     browser.visit('https://www.linkedin.com/search/results/people/' + filters)
     # Force le scroll vers le bas pour éviter de récupérer des résultats vides lorsqu'ils ne sont pas dans le viewport
+    time.sleep(3)
     browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     time.sleep(1)
     browser.execute_script("window.scrollTo(0, 0);")
