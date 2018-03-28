@@ -119,9 +119,11 @@ def main():
     print "Recherche de(s) mot(s) clé(s) '" + keywords + "'"
     #sys.exit()
 
+    # filtre = relation : 2e, 3e et +; lieux : france, region de paris, region de lyon, region de metz; secteurs : Comptabilité, Services financiers; langue : Français
+    filters = '?company=&facetGeoRegion=%5B"fr%3A0"%2C"fr%3A5227"%2C"fr%3A5210"%2C"fr%3A5213"%5D&facetIndustry=%5B"47"%2C"43"%5D&facetNetwork=%5B"S"%2C"O"%5D&facetProfileLanguage=%5B"fr"%5D&keywords=' + keywords + '&origin=FACETED_SEARCH' + '&page=' + page
 
     # filtres = relation : 2e, 3e et +; lieux : belgique, region de bruxelles; secteurs : Avocats, Services juridiques, Institutions judiciaires
-    filters = '?facetGeoRegion=%5B"be%3A0"%2C"be%3A4920"%5D&facetIndustry=%5B"9"%2C"10"%2C"73"%5D&facetNetwork=%5B"S"%2C"O"%5D&facetProfileLanguage=%5B"fr"%5D&firstName=&keywords=' + keywords + '&lastName=&origin=FACETED_SEARCH&' + '&page=' + page
+    #filters = '?facetGeoRegion=%5B"be%3A0"%2C"be%3A4920"%5D&facetIndustry=%5B"9"%2C"10"%2C"73"%5D&facetNetwork=%5B"S"%2C"O"%5D&facetProfileLanguage=%5B"fr"%5D&keywords=' + keywords + '&origin=FACETED_SEARCH' + '&page=' + page
 
     # filtres = relation : 2e, 3e et +; lieux : belgique; secteurs : Comptabilité, Services financiers; langue : Français
     #filters  = '?facetGeoRegion=%5B"be%3A0"%5D&facetIndustry=%5B"47"%2C"43"%5D&facetNetwork=%5B"S"%2C"O"%5D&facetProfileLanguage=%5B"fr"%5D&keywords=' + keywords + '&origin=FACETED_SEARCH' + '&page=' + page
