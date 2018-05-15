@@ -4,7 +4,6 @@ import sys
 import time
 import random
 from splinter import Browser
-from random import randint
 
 browser = Browser('firefox', headless=True)
 
@@ -38,22 +37,22 @@ def getPageList(stop):
 
         # Si le bouton permet de se connecter, on clique dessus puis on envoi un message prédéfini
         if item['action'] == "Se connecter":
-            print "Click pour " + item['name']
+            print("Click pour " + item['name'])
             action.click()
 
             # On clique sur le bouton permettant d'écrire un message à envoyer en plus de la demande de connexion
             addNote = browser.find_by_css('div.send-invite__actions button.button-secondary-large.mr1')
-            print "Click sur Ajouter une note"
+            print("Click sur Ajouter une note")
             addNote.click()
 
             # Rempli le champ de message avant d'envoyer la demande de connexion
             message = setMessage(item)
             browser.fill('message', message)
             sendInvite = browser.find_by_css('div.send-invite__actions button.button-primary-large.ml1')
-            print "Click sur Terminé"
+            print("Click sur Terminé")
             sendInvite.click()
             time.sleep(30)
-        print "----"
+        print("----")
 
     # Si un lien permettant de passer à la page de résultats suivants est présent, on clique dessus puis on appelle getPageList()
     if browser.is_element_present_by_css('button.next'):
@@ -70,7 +69,7 @@ def getPageList(stop):
 
 # Fonction principale
 def main():
-    print sys.argv
+    print(sys.argv)
 
     if "--user" in sys.argv:
         login = sys.argv[sys.argv.index("--user") + 1]
@@ -108,7 +107,7 @@ def main():
     else:
         stop = False
 
-    print "Connexion avec le compte '" + login + "'"
+    print("Connexion avec le compte '" + login + "'")
     url = "https://www.linkedin.com"
     browser.visit(url)
 
@@ -117,7 +116,7 @@ def main():
     loginSubmit = browser.find_by_id('login-submit')
     loginSubmit.click()
 
-    print "Recherche de(s) mot(s) clé(s) '" + keywords + "'"
+    print("Recherche de(s) mot(s) clé(s) '" + keywords + "'")
     #sys.exit()
 
     filters = []
