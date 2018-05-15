@@ -2,6 +2,7 @@
 import os
 import sys
 import time
+import random
 from splinter import Browser
 from random import randint
 
@@ -119,19 +120,21 @@ def main():
     print "Recherche de(s) mot(s) clé(s) '" + keywords + "'"
     #sys.exit()
 
+    filters = []
+
     # filtre = relation : 2e, 3e et +; lieux : france, region de paris, region de lyon, region de metz; secteurs : Comptabilité, Services financiers; langue : Français
-    filters = '?company=&facetGeoRegion=%5B"fr%3A0"%2C"fr%3A5227"%2C"fr%3A5210"%2C"fr%3A5213"%5D&facetIndustry=%5B"47"%2C"43"%5D&facetNetwork=%5B"S"%2C"O"%5D&facetProfileLanguage=%5B"fr"%5D&keywords=' + keywords + '&origin=FACETED_SEARCH' + '&page=' + page
+    filters.append('?company=&facetGeoRegion=%5B"fr%3A0"%2C"fr%3A5227"%2C"fr%3A5210"%2C"fr%3A5213"%5D&facetIndustry=%5B"47"%2C"43"%5D&facetNetwork=%5B"S"%2C"O"%5D&facetProfileLanguage=%5B"fr"%5D&keywords=' + keywords + '&origin=FACETED_SEARCH' + '&page=' + page)
 
     # filtres = relation : 2e, 3e et +; lieux : belgique, region de bruxelles; secteurs : Avocats, Services juridiques, Institutions judiciaires
-    #filters = '?facetGeoRegion=%5B"be%3A0"%2C"be%3A4920"%5D&facetIndustry=%5B"9"%2C"10"%2C"73"%5D&facetNetwork=%5B"S"%2C"O"%5D&facetProfileLanguage=%5B"fr"%5D&keywords=' + keywords + '&origin=FACETED_SEARCH' + '&page=' + page
+    filters.append('?facetGeoRegion=%5B"be%3A0"%2C"be%3A4920"%5D&facetIndustry=%5B"9"%2C"10"%2C"73"%5D&facetNetwork=%5B"S"%2C"O"%5D&facetProfileLanguage=%5B"fr"%5D&keywords=' + keywords + '&origin=FACETED_SEARCH' + '&page=' + page)
 
     # filtres = relation : 2e, 3e et +; lieux : belgique; secteurs : Comptabilité, Services financiers; langue : Français
-    #filters  = '?facetGeoRegion=%5B"be%3A0"%5D&facetIndustry=%5B"47"%2C"43"%5D&facetNetwork=%5B"S"%2C"O"%5D&facetProfileLanguage=%5B"fr"%5D&keywords=' + keywords + '&origin=FACETED_SEARCH' + '&page=' + page
+    filters.append( '?facetGeoRegion=%5B"be%3A0"%5D&facetIndustry=%5B"47"%2C"43"%5D&facetNetwork=%5B"S"%2C"O"%5D&facetProfileLanguage=%5B"fr"%5D&keywords=' + keywords + '&origin=FACETED_SEARCH' + '&page=' + page)
 
     # filtres = relation : 2e, 3e et +; lieux: luxembourg;
-    #filters = '?facetGeoRegion=["lu%3A0"]&facetNetwork=%5B%22S%22%2C%22O%22%5D&keywords=' + keywords + '&origin=FACETED_SEARCH'
+    filters.append('?facetGeoRegion=["lu%3A0"]&facetNetwork=%5B%22S%22%2C%22O%22%5D&keywords=' + keywords + '&origin=FACETED_SEARCH')
 
-    browser.visit('https://www.linkedin.com/search/results/people/' + filters)
+    browser.visit('https://www.linkedin.com/search/results/people/' + random.choice(filters))
     # Force le scroll vers le bas pour éviter de récupérer des résultats vides lorsqu'ils ne sont pas dans le viewport
     time.sleep(3)
     browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
